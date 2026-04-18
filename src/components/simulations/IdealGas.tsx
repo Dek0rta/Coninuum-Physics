@@ -192,7 +192,7 @@ export function IdealGas() {
         draw();
       }}
     >
-      <canvas ref={canvasRef} width={W} height={H} className="w-full" />
+      <canvas ref={canvasRef} width={W} height={H} className="w-full aspect-[600/350]" />
     </SimulationCanvas>
   );
 }

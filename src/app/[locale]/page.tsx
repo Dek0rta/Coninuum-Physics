@@ -106,8 +106,17 @@ export default async function HomePage({ params }: PageProps) {
         <h2 className="text-xl font-semibold text-[var(--text)]">{t("home.topics")}</h2>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {TOPICS.map((topic) => (
-            <Card key={topic.slug} variant="interactive">
+            <Card
+              key={topic.slug}
+              className="relative hover:border-[var(--accent)] hover:-translate-y-0.5 hover:shadow-md transition-all duration-200"
+            >
               <CardContent className="flex flex-col gap-4">
+                {/* Stretched link — covers entire card, navigates to Learn */}
+                <Link
+                  href={`/${locale}/learn/${topic.slug}`}
+                  className="absolute inset-0 z-0 rounded-[var(--radius-lg)]"
+                  aria-label={t(`topic.${topic.slug}`)}
+                />
                 <div
                   className={`w-10 h-10 rounded-[var(--radius)] flex items-center justify-center ${topic.bg}`}
                   style={{ color: topic.color }}
@@ -122,18 +131,15 @@ export default async function HomePage({ params }: PageProps) {
                     {topic.questionCount} questions · {topic.cardCount} cards
                   </p>
                 </div>
-                <div className="flex gap-2">
-                  <Link
-                    href={`/${locale}/learn/${topic.slug}`}
-                    className="flex items-center gap-1 text-xs text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors"
-                  >
+                <div className="relative z-10 flex gap-2">
+                  <span className="flex items-center gap-1 text-xs text-[var(--text-muted)]">
                     <Zap className="h-3 w-3" />
                     {t("home.learn")}
-                  </Link>
+                  </span>
                   <span className="text-[var(--border)]">·</span>
                   <Link
                     href={`/${locale}/quiz/${topic.slug}`}
-                    className="flex items-center gap-1 text-xs text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors"
+                    className="relative z-10 flex items-center gap-1 text-xs text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors"
                   >
                     <FlaskConical className="h-3 w-3" />
                     {t("nav.quiz")}
@@ -141,7 +147,7 @@ export default async function HomePage({ params }: PageProps) {
                   <span className="text-[var(--border)]">·</span>
                   <Link
                     href={`/${locale}/flashcards/${topic.slug}`}
-                    className="flex items-center gap-1 text-xs text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors"
+                    className="relative z-10 flex items-center gap-1 text-xs text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors"
                   >
                     <BookOpen className="h-3 w-3" />
                     {t("nav.flashcards")}
