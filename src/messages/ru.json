@@ -135,5 +135,45 @@
     "save": "Сохранить",
     "cancel": "Отмена",
     "confirm": "Подтвердить"
+  },
+  "dashboard": {
+    "greeting": "Добрый день",
+    "subtitle": "Сегодня хороший день, чтобы закрыть слабые темы, добрать серию и поднять точность ещё на несколько шагов.",
+    "statMmr": "ММР",
+    "statStreak": "СЕРИЯ",
+    "statStreakUnit": "дн.",
+    "statAccuracy": "ТОЧНОСТЬ",
+    "statToday": "СЕГОДНЯ",
+    "dailyGoal": "ДНЕВНАЯ ЦЕЛЬ",
+    "of": "из",
+    "topicProgress": "ПРОГРЕСС ПО ТЕМАМ",
+    "covered": "Что уже покрыто",
+    "openBank": "Открыть",
+    "weekRhythm": "Ритм недели",
+    "days7": "7 ДНЕЙ",
+    "tasks": "задач",
+    "leaderboardSection": "Топ игроков",
+    "allPlayers": "Все игроки",
+    "ofTasks": "из {count} задач"
+  },
+  "sidebar": {
+    "tagline": "Focus-first learning",
+    "overview": "ОБЗОР",
+    "practice": "ПРАКТИКА",
+    "growth": "РОСТ",
+    "cabinet": "Кабинет",
+    "community": "Сообщество",
+    "training": "Тренировки",
+    "problemBank": "Банк задач",
+    "simulations": "Симуляции"
+  },
+  "weekDays": {
+    "mon": "Пн",
+    "tue": "Вт",
+    "wed": "Ср",
+    "thu": "Чт",
+    "fri": "Пт",
+    "sat": "Сб",
+    "sun": "Вс"
   }
 }

@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import { Header } from "@/components/layout/Header";
+import { Sidebar } from "@/components/layout/Sidebar";
 import { PageTransition } from "@/components/layout/PageTransition";
 import { Toaster } from "sonner";
 import "@/app/globals.css";
@@ -54,8 +55,15 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
       <body>
         <NextIntlClientProvider messages={messages}>
           <ThemeProvider>
-            <Header locale={locale} />
-            <PageTransition>{children}</PageTransition>
+            <div className="flex min-h-screen">
+              <Sidebar locale={locale} />
+              <div className="flex-1 flex flex-col min-w-0">
+                <Header locale={locale} />
+                <main className="flex-1">
+                  <PageTransition>{children}</PageTransition>
+                </main>
+              </div>
+            </div>
             <Toaster
               richColors
               position="bottom-right"

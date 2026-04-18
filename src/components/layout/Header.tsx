@@ -91,7 +91,7 @@ export function Header({ locale }: HeaderProps) {
   ];
 
   return (
-    <>
+    <div className="lg:hidden">
       <header className="sticky top-0 z-40 w-full border-b border-[var(--border)] bg-[var(--bg)]/80 backdrop-blur-xl">
         <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 lg:px-6">
           {/* Logo */}
@@ -235,6 +235,6 @@ export function Header({ locale }: HeaderProps) {
         navItems={navItems}
         pathname={pathname}
       />
-    </>
+    </div>
   );
 }
