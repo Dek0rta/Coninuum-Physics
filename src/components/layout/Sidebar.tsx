@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion, LayoutGroup } from "framer-motion";
 import { useTranslations } from "next-intl";
 import {
   Home,
@@ -153,10 +153,10 @@ export function Sidebar({ locale }: SidebarProps) {
   };
 
   return (
-    <aside className="hidden lg:flex flex-col w-60 shrink-0 sticky top-0 h-screen border-r border-[var(--border)] bg-[var(--bg)] overflow-y-auto">
+    <aside className="hidden lg:flex flex-col w-[18.5rem] shrink-0 sticky top-0 h-screen glass-sidebar overflow-y-auto">
       {/* Logo */}
       <div className="flex items-center gap-2.5 px-5 py-5 border-b border-[var(--border)]">
-        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--accent)] text-white text-sm font-bold shrink-0">
+        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--accent)] text-white text-sm font-bold shrink-0 shadow-[0_0_16px_hsl(211_100%_50%/0.3)]">
           ∮
         </div>
         <div className="flex flex-col min-w-0">
@@ -176,29 +176,38 @@ export function Sidebar({ locale }: SidebarProps) {
           <p className="text-[9px] font-semibold uppercase tracking-widest text-[var(--text-muted)] px-2 mb-1.5">
             {t("sidebar.overview")}
           </p>
-          <ul className="space-y-0.5">
-            {overviewItems.map((item) => {
-              const active = isActiveOverview(item.href, item.exact);
-              return (
-                <li key={item.label}>
-                  <Link
-                    href={item.href}
-                    className={cn(
-                      "flex items-center gap-2.5 px-2 py-2 rounded-lg text-sm transition-colors duration-150",
-                      active
-                        ? "bg-[var(--bg-secondary)] text-[var(--text)] font-medium"
-                        : "text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--bg-secondary)]",
+          <LayoutGroup id="sidebar-nav-overview">
+            <ul className="space-y-0.5">
+              {overviewItems.map((item) => {
+                const active = isActiveOverview(item.href, item.exact);
+                return (
+                  <li key={item.label} className="relative">
+                    {active && (
+                      <motion.div
+                        layoutId="sidebar-pill"
+                        className="absolute inset-0 rounded-lg bg-[var(--bg-secondary)]"
+                        transition={{ type: "spring", stiffness: 400, damping: 35 }}
+                      />
                     )}
-                  >
-                    <span className={active ? "text-[var(--accent)]" : ""}>
-                      {item.icon}
-                    </span>
-                    {item.label}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
+                    <Link
+                      href={item.href}
+                      className={cn(
+                        "relative z-10 flex items-center gap-2.5 px-2 py-2 rounded-lg text-sm transition-colors duration-150",
+                        active
+                          ? "text-[var(--text)] font-medium"
+                          : "text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--bg-secondary)]",
+                      )}
+                    >
+                      <span className={active ? "text-[var(--accent)]" : ""}>
+                        {item.icon}
+                      </span>
+                      {item.label}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </LayoutGroup>
         </div>
 
         {/* ПРАКТИКА */}
@@ -206,34 +215,43 @@ export function Sidebar({ locale }: SidebarProps) {
           <p className="text-[9px] font-semibold uppercase tracking-widest text-[var(--text-muted)] px-2 mb-1.5">
             {t("sidebar.practice")}
           </p>
-          <ul className="space-y-0.5">
-            {practiceItems.map((item, i) => {
-              const active = isActivePractice(item.match, item.href);
-              return (
-                <li key={i}>
-                  <Link
-                    href={item.href}
-                    className={cn(
-                      "flex items-center gap-2.5 px-2 py-2 rounded-lg text-sm transition-colors duration-150",
-                      active
-                        ? "bg-[var(--bg-secondary)] text-[var(--text)] font-medium"
-                        : "text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--bg-secondary)]",
+          <LayoutGroup id="sidebar-nav-practice">
+            <ul className="space-y-0.5">
+              {practiceItems.map((item, i) => {
+                const active = isActivePractice(item.match, item.href);
+                return (
+                  <li key={i} className="relative">
+                    {active && (
+                      <motion.div
+                        layoutId="sidebar-pill-practice"
+                        className="absolute inset-0 rounded-lg bg-[var(--bg-secondary)]"
+                        transition={{ type: "spring", stiffness: 400, damping: 35 }}
+                      />
                     )}
-                  >
-                    <span className={active ? "text-[var(--accent)]" : ""}>
-                      {item.icon}
-                    </span>
-                    <span className="flex-1">{item.label}</span>
-                    {item.badge && (
-                      <span className="text-[9px] font-semibold bg-[var(--accent)]/15 text-[var(--accent)] px-1.5 py-0.5 rounded-full">
-                        {item.badge}
+                    <Link
+                      href={item.href}
+                      className={cn(
+                        "relative z-10 flex items-center gap-2.5 px-2 py-2 rounded-lg text-sm transition-colors duration-150",
+                        active
+                          ? "text-[var(--text)] font-medium"
+                          : "text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--bg-secondary)]",
+                      )}
+                    >
+                      <span className={active ? "text-[var(--accent)]" : ""}>
+                        {item.icon}
                       </span>
-                    )}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
+                      <span className="flex-1">{item.label}</span>
+                      {item.badge && (
+                        <span className="text-[9px] font-semibold bg-[var(--accent)]/15 text-[var(--accent)] px-1.5 py-0.5 rounded-full">
+                          {item.badge}
+                        </span>
+                      )}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </LayoutGroup>
         </div>
 
         {/* РОСТ */}
@@ -247,7 +265,7 @@ export function Sidebar({ locale }: SidebarProps) {
       {/* Bottom: user card + controls */}
       <div className="px-3 pb-4 border-t border-[var(--border)] pt-3 space-y-3">
         {profile && (
-          <div className="flex items-center gap-2.5 px-2 py-2 rounded-lg bg-[var(--bg-secondary)]">
+          <div className="flex items-center gap-2.5 px-2 py-2 glass-card">
             <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--accent)]/20 text-[var(--accent)] text-sm font-bold shrink-0 select-none">
               {profile.username[0].toUpperCase()}
             </div>
@@ -269,7 +287,7 @@ export function Sidebar({ locale }: SidebarProps) {
             ref={themeButtonRef}
             onClick={handleThemeToggle}
             className={cn(
-              "flex flex-1 items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-xs",
+              "btn-press flex flex-1 items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-xs",
               "text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--bg-secondary)]",
               "transition-colors duration-150 border border-[var(--border)]",
             )}
@@ -297,7 +315,7 @@ export function Sidebar({ locale }: SidebarProps) {
             <button
               onClick={handleSignOut}
               className={cn(
-                "flex items-center justify-center h-9 w-9 rounded-lg shrink-0",
+                "btn-press flex items-center justify-center h-9 w-9 rounded-lg shrink-0",
                 "text-[var(--text-muted)] hover:text-red-500 hover:bg-red-500/10",
                 "transition-colors duration-150 border border-[var(--border)]",
               )}

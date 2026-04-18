@@ -133,7 +133,7 @@ export default function DashboardPage({ params }: PageProps) {
     >
       {/* Hero Card */}
       <motion.div variants={cardVariants}>
-        <div className="rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] p-5 lg:p-6 flex flex-col lg:flex-row gap-5">
+        <div className="glass-card p-5 lg:p-6 flex flex-col lg:flex-row gap-5">
           {/* Left */}
           <div className="flex-1 space-y-4">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[var(--accent)]/10 text-[var(--accent)] text-xs font-medium">
@@ -168,7 +168,7 @@ export default function DashboardPage({ params }: PageProps) {
             <div className="flex flex-wrap gap-5 pt-1">
               {stats.map((stat) => (
                 <div key={stat.label} className="flex flex-col gap-0.5">
-                  <span className="text-[9px] font-semibold uppercase tracking-widest text-[var(--text-muted)]">
+                  <span className="text-[10px] font-semibold uppercase tracking-[0.1em] text-[var(--text-muted)]">
                     {stat.label}
                   </span>
                   <span
@@ -185,7 +185,7 @@ export default function DashboardPage({ params }: PageProps) {
           </div>
 
           {/* Right: Daily Goal */}
-          <div className="w-full lg:w-52 shrink-0 rounded-xl border border-[var(--border)] bg-[var(--bg-secondary)] p-4 flex flex-col gap-4">
+          <div className="w-full lg:w-52 shrink-0 card-base p-4 flex flex-col gap-4">
             <div>
               <p className="text-[9px] font-semibold uppercase tracking-widest text-[var(--text-muted)]">
                 {t("dashboard.dailyGoal")}
@@ -196,7 +196,7 @@ export default function DashboardPage({ params }: PageProps) {
                   {t("dashboard.of")} 10
                 </span>
               </p>
-              <div className="mt-2 h-1.5 rounded-full bg-[var(--border)] overflow-hidden">
+              <div className="mt-2 h-2 rounded-full bg-[var(--border)] overflow-hidden">
                 <div className="h-full w-0 bg-[var(--accent)] rounded-full" />
               </div>
             </div>
@@ -224,7 +224,7 @@ export default function DashboardPage({ params }: PageProps) {
       <div className="grid lg:grid-cols-[1fr_300px] gap-5">
         {/* Topic Progress */}
         <motion.div variants={cardVariants}>
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] p-5 lg:p-6 space-y-5 h-full">
+          <div className="card-base p-5 lg:p-6 space-y-5 h-full">
             <div>
               <p className="text-[9px] font-semibold uppercase tracking-widest text-[var(--text-muted)]">
                 {t("dashboard.topicProgress")}
@@ -288,7 +288,7 @@ export default function DashboardPage({ params }: PageProps) {
         <div className="flex flex-col gap-5">
           {/* Week Rhythm */}
           <motion.div variants={cardVariants}>
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] p-5">
+            <div className="card-base p-5">
               <div className="flex items-center justify-between mb-4">
                 <p className="text-[9px] font-semibold uppercase tracking-widest text-[var(--text-muted)]">
                   {t("dashboard.weekRhythm")}
@@ -350,7 +350,7 @@ export default function DashboardPage({ params }: PageProps) {
 
           {/* Mini Leaderboard */}
           <motion.div variants={cardVariants}>
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--bg-card)] p-5 space-y-3">
+            <div className="card-base p-5 space-y-3">
               <div className="flex items-center justify-between">
                 <p className="text-[9px] font-semibold uppercase tracking-widest text-[var(--text-muted)]">
                   {t("dashboard.leaderboardSection")}
@@ -378,7 +378,7 @@ export default function DashboardPage({ params }: PageProps) {
                       className={cn(
                         "flex items-center gap-3 px-3 py-2.5 rounded-xl transition-colors",
                         entry.rank_position === 1
-                          ? "bg-[var(--accent)]/10 border border-[var(--accent)]/20"
+                          ? "glass-card"
                           : "bg-[var(--bg-secondary)]",
                       )}
                     >

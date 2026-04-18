@@ -1,38 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&display=swap');
 @import "tailwindcss";
 @import "katex/dist/katex.min.css";
 
 /* ─── CSS Custom Properties ───────────────────────────────────────────────── */
 
 :root {
-  --bg: #fafafa;
-  --bg-secondary: #f4f4f5;
-  --bg-card: #ffffff;
-  --text: #0f172a;
-  --text-muted: #64748b;
-  --accent: #2563eb;
-  --accent-hover: #1d4ed8;
-  --border: #e2e8f0;
-  --border-subtle: #f1f5f9;
-  --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  --radius: 0.5rem;
-  --radius-lg: 0.75rem;
+  --bg: hsl(0 0% 98%);
+  --bg-secondary: hsl(220 14% 97%);
+  --bg-card: hsl(0 0% 100%);
+  --text: hsl(220 30% 8%);
+  --text-muted: hsl(220 14% 46%);
+  --accent: hsl(211 100% 50%);
+  --accent-hover: hsl(211 100% 43%);
+  --border: hsl(220 13% 91%);
+  --border-subtle: hsl(220 13% 95%);
+  --shadow: 0 1px 2px hsl(220 30% 8%/0.04), 0 1px 3px hsl(220 30% 8%/0.06);
+  --shadow-md: 0 2px 8px hsl(220 30% 8%/0.08), 0 4px 16px hsl(220 30% 8%/0.06), 0 0 0 1px hsl(220 13% 91%/0.6);
+  --shadow-lg: 0 4px 24px hsl(220 30% 8%/0.12), 0 12px 40px hsl(220 30% 8%/0.08), 0 0 0 1px hsl(220 13% 91%/0.5);
+  --radius: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --ease-cinema: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 [data-theme="dark"] {
-  --bg: #0a0f1e;
-  --bg-secondary: #0f172a;
-  --bg-card: #111827;
-  --text: #f1f5f9;
-  --text-muted: #94a3b8;
-  --accent: #3b82f6;
-  --accent-hover: #60a5fa;
-  --border: #1e293b;
-  --border-subtle: #0f172a;
-  --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.4), 0 1px 2px -1px rgb(0 0 0 / 0.4);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4);
+  --bg: hsl(220 24% 8%);
+  --bg-secondary: hsl(222 20% 11%);
+  --bg-card: hsl(222 18% 11%);
+  --text: hsl(220 14% 94%);
+  --text-muted: hsl(220 14% 58%);
+  --accent: hsl(206 88% 60%);
+  --accent-hover: hsl(206 88% 68%);
+  --border: hsl(222 16% 18%);
+  --border-subtle: hsl(222 16% 14%);
+  --shadow: 0 1px 2px hsl(0 0% 0%/0.3), 0 1px 3px hsl(0 0% 0%/0.25);
+  --shadow-md: 0 2px 8px hsl(0 0% 0%/0.4), 0 4px 16px hsl(0 0% 0%/0.3), 0 0 0 1px hsl(222 16% 18%/0.8);
+  --shadow-lg: 0 4px 24px hsl(0 0% 0%/0.5), 0 12px 40px hsl(0 0% 0%/0.35), 0 0 0 1px hsl(222 16% 18%/0.6);
 }
 
 /* ─── Base ────────────────────────────────────────────────────────────────── */
@@ -51,13 +55,16 @@ html {
 body {
   background-color: var(--bg);
   color: var(--text);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
-    Arial, sans-serif;
+  font-family: "Onest", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 16px;
   line-height: 1.6;
   transition: background-color 0.1s, color 0.1s;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4 {
+  letter-spacing: -0.04em;
 }
 
 /* ─── View Transitions ───────────────────────────────────────────────────── */
@@ -104,6 +111,63 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--text-muted);
 }
+
+/* ─── Glassmorphism ───────────────────────────────────────────────────────── */
+
+.glass-card {
+  background: color-mix(in srgb, var(--bg-card) 88%, transparent);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
+}
+
+.glass-sidebar {
+  background: color-mix(in srgb, var(--bg) 85%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-right: 1px solid color-mix(in srgb, var(--border) 60%, transparent);
+}
+
+.card-base {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+}
+
+/* ─── Animation Utilities ─────────────────────────────────────────────────── */
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes softFloat {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-6px); }
+}
+
+.fade-up    { animation: fadeUp 0.5s var(--ease-cinema) both; }
+.fade-up-d1 { animation: fadeUp 0.5s var(--ease-cinema) 0.05s both; }
+.fade-up-d2 { animation: fadeUp 0.5s var(--ease-cinema) 0.10s both; }
+.fade-up-d3 { animation: fadeUp 0.5s var(--ease-cinema) 0.15s both; }
+.fade-up-d4 { animation: fadeUp 0.5s var(--ease-cinema) 0.20s both; }
+.fade-up-d5 { animation: fadeUp 0.5s var(--ease-cinema) 0.25s both; }
+.fade-up-d6 { animation: fadeUp 0.5s var(--ease-cinema) 0.30s both; }
+
+.soft-float { animation: softFloat 4s var(--ease-cinema) infinite; }
+
+.card-lift {
+  transition: transform 0.3s var(--ease-spring), box-shadow 0.3s var(--ease-cinema);
+}
+.card-lift:hover {
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn-press { transition: transform 0.15s var(--ease-spring); }
+.btn-press:active { transform: scale(0.96); }
 
 /* ─── Focus Styles ────────────────────────────────────────────────────────── */
 
