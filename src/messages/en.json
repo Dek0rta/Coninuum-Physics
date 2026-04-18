@@ -31,7 +31,14 @@
     "yourProgress": "Your Progress",
     "continueSection": "Continue",
     "featuredSim": "Simulations",
-    "topics": "Topics"
+    "topics": "Topics",
+    "learn": "Learn",
+    "mmrRanking": "MMR Ranking",
+    "mmrRankingDesc": "Compete using Elo-based MMR. Answer questions to climb from Beginner to Legend.",
+    "simulations": "Physics Simulations",
+    "simulationsDesc": "Interactive canvas simulations for pendulums, circuits, waves and more.",
+    "spacedRepetition": "Spaced Repetition",
+    "spacedRepetitionDesc": "Formula flashcards with SM-2 algorithm to maximize retention."
   },
   "quiz": {
     "title": "Quiz",
@@ -65,7 +72,10 @@
     "progress": "Progress",
     "completed": "Done!",
     "studyAll": "Study All",
-    "dueToday": "Due Today"
+    "dueToday": "Due Today",
+    "accuracy": "Accuracy",
+    "total": "Total",
+    "studyAgain": "Study Again"
   },
   "profile": {
     "title": "Profile",
@@ -76,7 +86,9 @@
     "stats": "Statistics",
     "recentActivity": "Recent Activity",
     "days": "days",
-    "editProfile": "Edit Profile"
+    "editProfile": "Edit Profile",
+    "guestName": "Guest",
+    "signInNotice": "Sign in to save your progress, track streaks, and climb the leaderboard."
   },
   "leaderboard": {
     "title": "Leaderboard",
@@ -84,7 +96,9 @@
     "player": "Player",
     "mmr": "MMR",
     "streak": "Streak",
-    "youLabel": "You"
+    "youLabel": "You",
+    "rankings": "Rankings",
+    "demoNotice": "Demo data"
   },
   "simulation": {
     "play": "Play",
@@ -102,7 +116,16 @@
     "username": "Username",
     "forgotPassword": "Forgot password?",
     "noAccount": "Don't have an account?",
-    "haveAccount": "Already have an account?"
+    "haveAccount": "Already have an account?",
+    "welcomeBack": "Welcome back",
+    "createAccount": "Create account",
+    "confirmPassword": "Confirm password",
+    "passwordsNoMatch": "Passwords do not match",
+    "signingIn": "Signing in...",
+    "signingUp": "Signing up...",
+    "checkEmail": "Check your email to confirm",
+    "demoNotice": "Auth disabled in demo mode",
+    "signInToContinue": "Sign in to save your progress"
   },
   "common": {
     "loading": "Loading...",

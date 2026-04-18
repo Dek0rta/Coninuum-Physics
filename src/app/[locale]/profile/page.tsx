@@ -1,33 +1,61 @@
 "use client";
 
-import { use } from "react";
+import { use, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { Flame, Trophy, Target, Calendar, User } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
-import { Badge } from "@/components/ui/Badge";
+import { Card, CardContent } from "@/components/ui/Card";
 import { RankBadge } from "@/components/mmr/RankBadge";
+import { SkeletonProfileHeader, SkeletonStatGrid } from "@/components/ui/Skeleton";
 import { useUserStore } from "@/stores/useUserStore";
+import { createClient } from "@/lib/supabase/client";
+import type { Profile } from "@/types";
 
 interface PageProps {
   params: Promise<{ locale: string }>;
 }
 
-const STAT_ITEMS = [
-  { icon: <Flame className="h-5 w-5 text-orange-500" />, key: "streak", label: "Current Streak", color: "text-orange-500" },
-  { icon: <Trophy className="h-5 w-5 text-amber-500" />, key: "max_streak", label: "Best Streak", color: "text-amber-500" },
-  { icon: <Target className="h-5 w-5 text-blue-500" />, key: "mmr", label: "MMR", color: "text-blue-500" },
-];
-
 export default function ProfilePage({ params }: PageProps) {
   const { locale } = use(params);
   const t = useTranslations();
-  const { profile, isLoading } = useUserStore();
+  const { profile, setProfile } = useUserStore();
+  const [isFetching, setIsFetching] = useState(true);
 
-  if (isLoading) {
+  useEffect(() => {
+    let cancelled = false;
+
+    async function fetchProfile() {
+      try {
+        const supabase = createClient();
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user || cancelled) return;
+
+        const { data } = await supabase
+          .from("profiles")
+          .select("*")
+          .eq("id", user.id)
+          .single();
+
+        if (data && !cancelled) {
+          setProfile(data as Profile);
+        }
+      } catch {
+        // Supabase not configured — keep demo fallback
+      } finally {
+        if (!cancelled) setIsFetching(false);
+      }
+    }
+
+    fetchProfile();
+    return () => { cancelled = true; };
+  }, [setProfile]);
+
+  // Show skeleton while fetching
+  if (isFetching) {
     return (
-      <div className="mx-auto max-w-2xl px-4 py-16 flex items-center justify-center">
-        <div className="animate-spin h-8 w-8 rounded-full border-2 border-[var(--accent)] border-t-transparent" />
+      <div className="mx-auto max-w-2xl px-4 py-8 space-y-8">
+        <SkeletonProfileHeader />
+        <SkeletonStatGrid />
       </div>
     );
   }
@@ -35,7 +63,7 @@ export default function ProfilePage({ params }: PageProps) {
   // Demo profile when not authenticated
   const displayProfile = profile ?? {
     id: "demo",
-    username: "Guest",
+    username: t("profile.guestName"),
     avatar_url: null,
     mmr: 1000,
     rank: "scholar" as const,
@@ -44,6 +72,27 @@ export default function ProfilePage({ params }: PageProps) {
     last_active: null,
     created_at: new Date().toISOString(),
   };
+
+  const statItems = [
+    {
+      icon: <Flame className="h-5 w-5 text-orange-500" />,
+      key: "streak" as const,
+      label: t("profile.streak"),
+      color: "text-orange-500",
+    },
+    {
+      icon: <Trophy className="h-5 w-5 text-amber-500" />,
+      key: "max_streak" as const,
+      label: t("profile.maxStreak"),
+      color: "text-amber-500",
+    },
+    {
+      icon: <Target className="h-5 w-5 text-blue-500" />,
+      key: "mmr" as const,
+      label: t("profile.mmr"),
+      color: "text-blue-500",
+    },
+  ];
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-8 space-y-8">
@@ -57,6 +106,7 @@ export default function ProfilePage({ params }: PageProps) {
           <CardContent className="flex items-start gap-5 py-6">
             <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-[var(--accent)]/10 text-2xl">
               {displayProfile.avatar_url ? (
+                // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={displayProfile.avatar_url}
                   alt={displayProfile.username}
@@ -71,7 +121,7 @@ export default function ProfilePage({ params }: PageProps) {
               {displayProfile.last_active && (
                 <div className="flex items-center gap-1 mt-1 text-xs text-[var(--text-muted)]">
                   <Calendar className="h-3 w-3" />
-                  Last active: {new Date(displayProfile.last_active).toLocaleDateString()}
+                  {new Date(displayProfile.last_active).toLocaleDateString()}
                 </div>
               )}
               <div className="mt-3">
@@ -89,12 +139,12 @@ export default function ProfilePage({ params }: PageProps) {
         transition={{ type: "spring", delay: 0.1 }}
         className="grid grid-cols-3 gap-4"
       >
-        {STAT_ITEMS.map(({ icon, key, label, color }) => (
+        {statItems.map(({ icon, key, label, color }) => (
           <Card key={key}>
             <CardContent className="flex flex-col items-center gap-2 py-5">
               {icon}
               <span className={`text-2xl font-bold tabular-nums ${color}`}>
-                {displayProfile[key as keyof typeof displayProfile]?.toString() ?? "0"}
+                {displayProfile[key]?.toString() ?? "0"}
               </span>
               <span className="text-xs text-[var(--text-muted)] text-center">{label}</span>
             </CardContent>
@@ -111,20 +161,20 @@ export default function ProfilePage({ params }: PageProps) {
           className="p-4 rounded-[var(--radius-lg)] border border-[var(--accent)]/30 bg-[var(--accent)]/5"
         >
           <p className="text-sm text-[var(--text-muted)]">
-            Sign in to save your progress, track streaks, and climb the leaderboard.
+            {t("profile.signInNotice")}
           </p>
           <div className="flex gap-2 mt-3">
             <a
               href={`/${locale}/auth/signin`}
               className="px-4 py-1.5 text-sm rounded-[var(--radius)] bg-[var(--accent)] text-white hover:bg-[var(--accent-hover)] transition-colors"
             >
-              Sign In
+              {t("auth.signIn")}
             </a>
             <a
               href={`/${locale}/auth/signup`}
               className="px-4 py-1.5 text-sm rounded-[var(--radius)] border border-[var(--border)] bg-[var(--bg-secondary)] text-[var(--text)] hover:bg-[var(--border)] transition-colors"
             >
-              Sign Up
+              {t("auth.signUp")}
             </a>
           </div>
         </motion.div>

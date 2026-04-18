@@ -1,13 +1,14 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslations } from "next-intl";
-import { Sun, Moon, Flame, User, Trophy, BookOpen, Zap, FlaskConical } from "lucide-react";
+import { Sun, Moon, Flame, User, Trophy, BookOpen, Zap, FlaskConical, Menu, X } from "lucide-react";
 import { useThemeStore } from "@/stores/useThemeStore";
 import { useUserStore } from "@/stores/useUserStore";
+import { MobileNav } from "./MobileNav";
 import { cn } from "@/lib/utils";
 
 interface HeaderProps {
@@ -20,6 +21,12 @@ export function Header({ locale }: HeaderProps) {
   const themeButtonRef = useRef<HTMLButtonElement>(null);
   const { theme, toggleTheme, transition } = useThemeStore();
   const { profile } = useUserStore();
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  // Close mobile nav on route change
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
 
   const handleThemeToggle = () => {
     const btn = themeButtonRef.current;
@@ -90,7 +97,7 @@ export function Header({ locale }: HeaderProps) {
             </span>
           </Link>
 
-          {/* Nav */}
+          {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-1">
             {navItems.map((item) => {
               const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
@@ -133,11 +140,11 @@ export function Header({ locale }: HeaderProps) {
               </div>
             )}
 
-            {/* Lang toggle */}
+            {/* Desktop: Lang toggle */}
             <Link
               href={pathname.replace(`/${locale}`, `/${locale === "ru" ? "en" : "ru"}`)}
               className={cn(
-                "px-2 py-1 rounded-[var(--radius)] text-xs font-medium uppercase",
+                "hidden md:block px-2 py-1 rounded-[var(--radius)] text-xs font-medium uppercase",
                 "text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--bg-secondary)]",
                 "transition-colors duration-150"
               )}
@@ -145,12 +152,12 @@ export function Header({ locale }: HeaderProps) {
               {locale === "ru" ? "EN" : "RU"}
             </Link>
 
-            {/* Theme toggle */}
+            {/* Desktop: Theme toggle */}
             <button
               ref={themeButtonRef}
               onClick={handleThemeToggle}
               className={cn(
-                "flex h-9 w-9 items-center justify-center rounded-[var(--radius)]",
+                "hidden md:flex h-9 w-9 items-center justify-center rounded-[var(--radius)]",
                 "text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--bg-secondary)]",
                 "transition-colors duration-150"
               )}
@@ -173,11 +180,11 @@ export function Header({ locale }: HeaderProps) {
               </AnimatePresence>
             </button>
 
-            {/* Profile */}
+            {/* Desktop: Profile */}
             <Link
               href={`/${locale}/profile`}
               className={cn(
-                "flex h-9 w-9 items-center justify-center rounded-[var(--radius)]",
+                "hidden md:flex h-9 w-9 items-center justify-center rounded-[var(--radius)]",
                 "text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--bg-secondary)]",
                 "transition-colors duration-150"
               )}
@@ -185,9 +192,42 @@ export function Header({ locale }: HeaderProps) {
             >
               <User className="h-4 w-4" />
             </Link>
+
+            {/* Mobile: Hamburger */}
+            <button
+              onClick={() => setMobileOpen((v) => !v)}
+              className={cn(
+                "flex md:hidden h-9 w-9 items-center justify-center rounded-[var(--radius)]",
+                "text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--bg-secondary)]",
+                "transition-colors duration-150"
+              )}
+              aria-label="Open menu"
+              aria-expanded={mobileOpen}
+            >
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={mobileOpen ? "close" : "open"}
+                  initial={{ rotate: -90, opacity: 0, scale: 0.8 }}
+                  animate={{ rotate: 0, opacity: 1, scale: 1 }}
+                  exit={{ rotate: 90, opacity: 0, scale: 0.8 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                >
+                  {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+                </motion.div>
+              </AnimatePresence>
+            </button>
           </div>
         </div>
       </header>
+
+      {/* Mobile nav drawer */}
+      <MobileNav
+        isOpen={mobileOpen}
+        onClose={() => setMobileOpen(false)}
+        locale={locale}
+        navItems={navItems}
+        pathname={pathname}
+      />
     </>
   );
 }

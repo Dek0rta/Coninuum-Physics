@@ -47,6 +47,27 @@ export default async function HomePage({ params }: PageProps) {
   const { locale } = await params;
   const t = await getTranslations();
 
+  const features = [
+    {
+      icon: "⬡",
+      titleKey: "home.mmrRanking" as const,
+      descKey: "home.mmrRankingDesc" as const,
+      color: "#3b82f6",
+    },
+    {
+      icon: "🔬",
+      titleKey: "home.simulations" as const,
+      descKey: "home.simulationsDesc" as const,
+      color: "#10b981",
+    },
+    {
+      icon: "🃏",
+      titleKey: "home.spacedRepetition" as const,
+      descKey: "home.spacedRepetitionDesc" as const,
+      color: "#8b5cf6",
+    },
+  ];
+
   return (
     <div className="mx-auto max-w-7xl px-4 lg:px-6 py-10 space-y-16">
       {/* Hero */}
@@ -85,10 +106,7 @@ export default async function HomePage({ params }: PageProps) {
         <h2 className="text-xl font-semibold text-[var(--text)]">{t("home.topics")}</h2>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {TOPICS.map((topic) => (
-            <Card
-              key={topic.slug}
-              className="group hover:border-[var(--accent)] transition-colors duration-200"
-            >
+            <Card key={topic.slug} variant="interactive">
               <CardContent className="flex flex-col gap-4">
                 <div
                   className={`w-10 h-10 rounded-[var(--radius)] flex items-center justify-center ${topic.bg}`}
@@ -110,7 +128,7 @@ export default async function HomePage({ params }: PageProps) {
                     className="flex items-center gap-1 text-xs text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors"
                   >
                     <Zap className="h-3 w-3" />
-                    Learn
+                    {t("home.learn")}
                   </Link>
                   <span className="text-[var(--border)]">·</span>
                   <Link
@@ -137,29 +155,10 @@ export default async function HomePage({ params }: PageProps) {
 
       {/* Feature highlights */}
       <section className="grid sm:grid-cols-3 gap-6">
-        {[
-          {
-            icon: "⬡",
-            title: "MMR Ranking",
-            desc: "Compete using Elo-based MMR. Answer questions to climb from Beginner to Legend.",
-            color: "#3b82f6",
-          },
-          {
-            icon: "🔬",
-            title: "Physics Simulations",
-            desc: "Interactive canvas simulations for pendulums, circuits, waves and more.",
-            color: "#10b981",
-          },
-          {
-            icon: "🃏",
-            title: "Spaced Repetition",
-            desc: "Formula flashcards with SM-2 algorithm to maximize retention.",
-            color: "#8b5cf6",
-          },
-        ].map((feature) => (
+        {features.map((feature) => (
           <div
-            key={feature.title}
-            className="p-6 rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--bg-card)] space-y-3"
+            key={feature.titleKey}
+            className="p-6 rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--bg-card)] space-y-3 hover:border-[var(--accent)]/40 transition-colors duration-200"
           >
             <div
               className="text-3xl"
@@ -167,8 +166,8 @@ export default async function HomePage({ params }: PageProps) {
             >
               {feature.icon}
             </div>
-            <h3 className="font-semibold text-[var(--text)]">{feature.title}</h3>
-            <p className="text-sm text-[var(--text-muted)] leading-relaxed">{feature.desc}</p>
+            <h3 className="font-semibold text-[var(--text)]">{t(feature.titleKey)}</h3>
+            <p className="text-sm text-[var(--text-muted)] leading-relaxed">{t(feature.descKey)}</p>
           </div>
         ))}
       </section>

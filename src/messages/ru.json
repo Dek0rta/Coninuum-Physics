@@ -31,7 +31,14 @@
     "yourProgress": "Ваш прогресс",
     "continueSection": "Продолжить",
     "featuredSim": "Симуляции",
-    "topics": "Разделы"
+    "topics": "Разделы",
+    "learn": "Учить",
+    "mmrRanking": "Система MMR",
+    "mmrRankingDesc": "Соревнуйся по системе Elo. Отвечай на вопросы и поднимайся от Новичка до Легенды.",
+    "simulations": "Симуляции",
+    "simulationsDesc": "Интерактивные симуляции маятников, цепей, волн и многого другого.",
+    "spacedRepetition": "Интервальное повторение",
+    "spacedRepetitionDesc": "Карточки с формулами по алгоритму SM-2 для максимального запоминания."
   },
   "quiz": {
     "title": "Квиз",
@@ -65,7 +72,10 @@
     "progress": "Прогресс",
     "completed": "Готово!",
     "studyAll": "Все карточки",
-    "dueToday": "На сегодня"
+    "dueToday": "На сегодня",
+    "accuracy": "Точность",
+    "total": "Итого",
+    "studyAgain": "Повторить"
   },
   "profile": {
     "title": "Профиль",
@@ -76,7 +86,9 @@
     "stats": "Статистика",
     "recentActivity": "Недавняя активность",
     "days": "дн.",
-    "editProfile": "Редактировать"
+    "editProfile": "Редактировать",
+    "guestName": "Гость",
+    "signInNotice": "Войдите, чтобы сохранять прогресс, отслеживать серии и подниматься в рейтинге."
   },
   "leaderboard": {
     "title": "Рейтинг",
@@ -84,7 +96,9 @@
     "player": "Игрок",
     "mmr": "MMR",
     "streak": "Серия",
-    "youLabel": "Вы"
+    "youLabel": "Вы",
+    "rankings": "Рейтинг",
+    "demoNotice": "Демо данные"
   },
   "simulation": {
     "play": "Старт",
@@ -102,7 +116,16 @@
     "username": "Имя пользователя",
     "forgotPassword": "Забыли пароль?",
     "noAccount": "Нет аккаунта?",
-    "haveAccount": "Уже есть аккаунт?"
+    "haveAccount": "Уже есть аккаунт?",
+    "welcomeBack": "Добро пожаловать",
+    "createAccount": "Создать аккаунт",
+    "confirmPassword": "Подтвердите пароль",
+    "passwordsNoMatch": "Пароли не совпадают",
+    "signingIn": "Вход...",
+    "signingUp": "Регистрация...",
+    "checkEmail": "Проверьте почту для подтверждения",
+    "demoNotice": "Авторизация отключена в демо-режиме",
+    "signInToContinue": "Войдите чтобы сохранять прогресс"
   },
   "common": {
     "loading": "Загрузка...",

@@ -6,6 +6,18 @@ import { useTranslations } from "next-intl";
 import { FlipCard } from "./FlipCard";
 import type { Flashcard, FlashcardRating } from "@/types";
 
+async function saveProgress(cardId: string, rating: FlashcardRating): Promise<void> {
+  try {
+    await fetch("/api/progress", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ card_id: cardId, rating }),
+    });
+  } catch {
+    // silently ignore network errors
+  }
+}
+
 interface CardDeckProps {
   cards: Flashcard[];
   onComplete?: () => void;
@@ -51,6 +63,8 @@ export function CardDeck({ cards, onComplete }: CardDeckProps) {
 
   const handleRate = (rating: FlashcardRating) => {
     setHistory((h) => [...h, rating]);
+    // Fire-and-forget: silently ignores 401 (not authenticated) and network errors
+    void saveProgress(currentCard.id, rating);
 
     if (currentIndex + 1 >= cards.length) {
       setCompleted(true);
@@ -75,15 +89,15 @@ export function CardDeck({ cards, onComplete }: CardDeckProps) {
         <div className="flex gap-8 text-center">
           <div>
             <p className="text-2xl font-bold text-emerald-500">{goodCount}</p>
-            <p className="text-sm text-[var(--text-muted)]">Good/Easy</p>
+            <p className="text-sm text-[var(--text-muted)]">{t("rating.good")}/{t("rating.easy")}</p>
           </div>
           <div>
             <p className="text-2xl font-bold text-[var(--accent)]">{accuracy}%</p>
-            <p className="text-sm text-[var(--text-muted)]">Accuracy</p>
+            <p className="text-sm text-[var(--text-muted)]">{t("accuracy")}</p>
           </div>
           <div>
             <p className="text-2xl font-bold text-[var(--text)]">{cards.length}</p>
-            <p className="text-sm text-[var(--text-muted)]">Total</p>
+            <p className="text-sm text-[var(--text-muted)]">{t("total")}</p>
           </div>
         </div>
         <button
@@ -94,7 +108,7 @@ export function CardDeck({ cards, onComplete }: CardDeckProps) {
           }}
           className="px-5 py-2 rounded-[var(--radius)] bg-[var(--accent)] text-white text-sm font-medium hover:bg-[var(--accent-hover)] transition-colors"
         >
-          Study Again
+          {t("studyAgain")}
         </button>
       </motion.div>
     );

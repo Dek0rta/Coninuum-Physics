@@ -1,15 +1,14 @@
 import { getTranslations } from "next-intl/server";
 import { Trophy, Flame } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
+import { Card, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
-import { getRankFromMmr, getRankName } from "@/lib/mmr";
+import { getRankFromMmr } from "@/lib/mmr";
 import type { LeaderboardEntry } from "@/types";
 
 interface PageProps {
   params: Promise<{ locale: string }>;
 }
 
-// Demo leaderboard data — in production this would come from Supabase
 const DEMO_LEADERBOARD: LeaderboardEntry[] = [
   { rank_position: 1, user_id: "1", username: "PhysicsGuru", avatar_url: null, mmr: 2850, rank: "master", streak: 42 },
   { rank_position: 2, user_id: "2", username: "QuantumLeap", avatar_url: null, mmr: 2601, rank: "master", streak: 18 },
@@ -25,20 +24,61 @@ const DEMO_LEADERBOARD: LeaderboardEntry[] = [
 
 const MEDAL: Record<number, string> = { 1: "🥇", 2: "🥈", 3: "🥉" };
 
+async function fetchLeaderboard(): Promise<{ entries: LeaderboardEntry[]; isDemo: boolean }> {
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
+    return { entries: DEMO_LEADERBOARD, isDemo: true };
+  }
+
+  try {
+    const { createClient } = await import("@/lib/supabase/server");
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("profiles")
+      .select("id, username, avatar_url, mmr, rank, streak")
+      .order("mmr", { ascending: false })
+      .limit(20);
+
+    if (error || !data || data.length === 0) {
+      return { entries: DEMO_LEADERBOARD, isDemo: true };
+    }
+
+    const entries: LeaderboardEntry[] = data.map((row, i) => ({
+      rank_position: i + 1,
+      user_id: row.id as string,
+      username: row.username as string,
+      avatar_url: row.avatar_url as string | null,
+      mmr: row.mmr as number,
+      rank: row.rank as LeaderboardEntry["rank"],
+      streak: row.streak as number,
+    }));
+
+    return { entries, isDemo: false };
+  } catch {
+    return { entries: DEMO_LEADERBOARD, isDemo: true };
+  }
+}
+
 export default async function LeaderboardPage({ params }: PageProps) {
-  const { locale } = await params;
+  await params;
   const t = await getTranslations();
+  const { entries, isDemo } = await fetchLeaderboard();
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-8 space-y-8">
       <div className="flex items-center gap-3">
         <Trophy className="h-7 w-7 text-amber-500" />
         <h1 className="text-3xl font-bold text-[var(--text)]">{t("leaderboard.title")}</h1>
+        {isDemo && (
+          <Badge variant="default" className="ml-auto text-xs">
+            {t("leaderboard.demoNotice")}
+          </Badge>
+        )}
       </div>
 
       {/* Top 3 podium */}
       <div className="grid grid-cols-3 gap-3">
-        {[DEMO_LEADERBOARD[1], DEMO_LEADERBOARD[0], DEMO_LEADERBOARD[2]].map((entry, i) => {
+        {[entries[1], entries[0], entries[2]].map((entry, i) => {
+          if (!entry) return null;
           const pos = i === 0 ? 2 : i === 1 ? 1 : 3;
           const rank = getRankFromMmr(entry.mmr);
           return (
@@ -63,10 +103,10 @@ export default async function LeaderboardPage({ params }: PageProps) {
       {/* Full table */}
       <Card>
         <CardHeader>
-          <CardTitle>Rankings</CardTitle>
+          <CardTitle>{t("leaderboard.rankings")}</CardTitle>
         </CardHeader>
         <div className="divide-y divide-[var(--border)]">
-          {DEMO_LEADERBOARD.map((entry) => {
+          {entries.map((entry) => {
             const rank = getRankFromMmr(entry.mmr);
             return (
               <div
