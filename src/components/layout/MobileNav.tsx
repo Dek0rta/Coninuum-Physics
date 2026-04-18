@@ -126,7 +126,7 @@ export function MobileNav({ isOpen, onClose, locale, navItems, pathname }: Mobil
               {/* Theme toggle */}
               <button
                 onClick={() => {
-                  toggleTheme(window.innerWidth / 2, window.innerHeight / 2);
+                  toggleTheme();
                   onClose();
                 }}
                 className="flex w-full items-center gap-3 px-3 py-2.5 rounded-[var(--radius)] text-sm text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--bg-secondary)] transition-colors"

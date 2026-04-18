@@ -124,12 +124,6 @@ export interface SimulationState {
 
 export type Theme = "light" | "dark";
 
-export interface ThemeTransition {
-  x: number;
-  y: number;
-  active: boolean;
-}
-
 // ─── i18n ─────────────────────────────────────────────────────────────────────
 
 export type Locale = "en" | "ru";

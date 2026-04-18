@@ -3,7 +3,7 @@
 import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { Sun, Moon, Flame, User, Trophy, BookOpen, Zap, FlaskConical, Menu, X } from "lucide-react";
 import { useThemeStore } from "@/stores/useThemeStore";
@@ -19,9 +19,10 @@ export function Header({ locale }: HeaderProps) {
   const t = useTranslations();
   const pathname = usePathname();
   const themeButtonRef = useRef<HTMLButtonElement>(null);
-  const { theme, toggleTheme, transition } = useThemeStore();
+  const { theme, toggleTheme } = useThemeStore();
   const { profile } = useUserStore();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   // Close mobile nav on route change
   useEffect(() => {
@@ -29,12 +30,40 @@ export function Header({ locale }: HeaderProps) {
   }, [pathname]);
 
   const handleThemeToggle = () => {
+    const doc = document as Document & {
+      startViewTransition?: (cb: () => void) => { ready: Promise<void> };
+    };
+
+    if (shouldReduceMotion || !doc.startViewTransition) {
+      toggleTheme();
+      return;
+    }
+
     const btn = themeButtonRef.current;
-    if (!btn) return;
-    const rect = btn.getBoundingClientRect();
-    const x = rect.left + rect.width / 2;
-    const y = rect.top + rect.height / 2;
-    toggleTheme(x, y);
+    const rect = btn?.getBoundingClientRect();
+    const x = rect ? rect.left + rect.width / 2 : window.innerWidth / 2;
+    const y = rect ? rect.top + rect.height / 2 : window.innerHeight / 2;
+    const maxR = Math.hypot(
+      Math.max(x, window.innerWidth - x),
+      Math.max(y, window.innerHeight - y),
+    );
+
+    const vt = doc.startViewTransition(() => { toggleTheme(); });
+    void vt.ready.then(() => {
+      document.documentElement.animate(
+        {
+          clipPath: [
+            `circle(0px at ${x}px ${y}px)`,
+            `circle(${maxR}px at ${x}px ${y}px)`,
+          ],
+        },
+        {
+          duration: 450,
+          easing: "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+          pseudoElement: "::view-transition-new(root)",
+        },
+      );
+    });
   };
 
   const navItems = [
@@ -63,28 +92,6 @@ export function Header({ locale }: HeaderProps) {
 
   return (
     <>
-      {/* Theme transition overlay */}
-      <div
-        className="theme-transition-overlay"
-        style={
-          {
-            "--t-x": `${transition.x}px`,
-            "--t-y": `${transition.y}px`,
-          } as React.CSSProperties
-        }
-        aria-hidden="true"
-        data-active={transition.active}
-        ref={(el) => {
-          if (el) {
-            if (transition.active) {
-              el.classList.add("active");
-            } else {
-              el.classList.remove("active");
-            }
-          }
-        }}
-      />
-
       <header className="sticky top-0 z-40 w-full border-b border-[var(--border)] bg-[var(--bg)]/80 backdrop-blur-xl">
         <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 lg:px-6">
           {/* Logo */}
