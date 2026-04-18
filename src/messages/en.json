@@ -1,0 +1,116 @@
+{
+  "nav": {
+    "learn": "Learn",
+    "quiz": "Quiz",
+    "flashcards": "Flashcards",
+    "profile": "Profile",
+    "leaderboard": "Leaderboard",
+    "home": "Home"
+  },
+  "topic": {
+    "mechanics": "Mechanics",
+    "electricity": "Electricity",
+    "waves": "Waves & Optics",
+    "thermodynamics": "Thermodynamics"
+  },
+  "rank": {
+    "beginner": "Beginner",
+    "apprentice": "Apprentice",
+    "scholar": "Scholar",
+    "physicist": "Physicist",
+    "expert": "Expert",
+    "master": "Master",
+    "grand_master": "Grand Master",
+    "legend": "Legend"
+  },
+  "home": {
+    "title": "Master Physics",
+    "subtitle": "An interactive physics learning platform with simulations, quizzes, and a live ranking system",
+    "startLearning": "Start Learning",
+    "viewLeaderboard": "Leaderboard",
+    "yourProgress": "Your Progress",
+    "continueSection": "Continue",
+    "featuredSim": "Simulations",
+    "topics": "Topics"
+  },
+  "quiz": {
+    "title": "Quiz",
+    "question": "Question",
+    "of": "of",
+    "correct": "Correct!",
+    "incorrect": "Incorrect",
+    "explanation": "Explanation",
+    "next": "Next Question",
+    "finish": "Finish",
+    "mmrGain": "MMR",
+    "result": {
+      "title": "Results",
+      "score": "Correct",
+      "totalMmr": "Total MMR",
+      "playAgain": "Play Again",
+      "backToLearn": "Back to Topics"
+    }
+  },
+  "flashcards": {
+    "title": "Flashcards",
+    "flip": "Tap to flip",
+    "front": "Formula",
+    "back": "Definition",
+    "rating": {
+      "again": "Again",
+      "hard": "Hard",
+      "good": "Good",
+      "easy": "Easy"
+    },
+    "progress": "Progress",
+    "completed": "Done!",
+    "studyAll": "Study All",
+    "dueToday": "Due Today"
+  },
+  "profile": {
+    "title": "Profile",
+    "mmr": "MMR",
+    "rank": "Rank",
+    "streak": "Streak",
+    "maxStreak": "Best Streak",
+    "stats": "Statistics",
+    "recentActivity": "Recent Activity",
+    "days": "days",
+    "editProfile": "Edit Profile"
+  },
+  "leaderboard": {
+    "title": "Leaderboard",
+    "rank": "Rank",
+    "player": "Player",
+    "mmr": "MMR",
+    "streak": "Streak",
+    "youLabel": "You"
+  },
+  "simulation": {
+    "play": "Play",
+    "pause": "Pause",
+    "reset": "Reset",
+    "controls": "Controls",
+    "realtime": "Real-time Data"
+  },
+  "auth": {
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "signOut": "Sign Out",
+    "email": "Email",
+    "password": "Password",
+    "username": "Username",
+    "forgotPassword": "Forgot password?",
+    "noAccount": "Don't have an account?",
+    "haveAccount": "Already have an account?"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "retry": "Retry",
+    "back": "Back",
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "Confirm"
+  }
+}

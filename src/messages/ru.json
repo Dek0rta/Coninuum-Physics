@@ -1,0 +1,116 @@
+{
+  "nav": {
+    "learn": "Учиться",
+    "quiz": "Квиз",
+    "flashcards": "Карточки",
+    "profile": "Профиль",
+    "leaderboard": "Рейтинг",
+    "home": "Главная"
+  },
+  "topic": {
+    "mechanics": "Механика",
+    "electricity": "Электричество",
+    "waves": "Волны и оптика",
+    "thermodynamics": "Термодинамика"
+  },
+  "rank": {
+    "beginner": "Новичок",
+    "apprentice": "Ученик",
+    "scholar": "Студент",
+    "physicist": "Физик",
+    "expert": "Эксперт",
+    "master": "Мастер",
+    "grand_master": "Гроссмейстер",
+    "legend": "Легенда"
+  },
+  "home": {
+    "title": "Изучай физику",
+    "subtitle": "Интерактивная платформа для изучения физики с симуляциями, квизами и системой рейтинга",
+    "startLearning": "Начать обучение",
+    "viewLeaderboard": "Рейтинг",
+    "yourProgress": "Ваш прогресс",
+    "continueSection": "Продолжить",
+    "featuredSim": "Симуляции",
+    "topics": "Разделы"
+  },
+  "quiz": {
+    "title": "Квиз",
+    "question": "Вопрос",
+    "of": "из",
+    "correct": "Правильно!",
+    "incorrect": "Неверно",
+    "explanation": "Объяснение",
+    "next": "Следующий вопрос",
+    "finish": "Завершить",
+    "mmrGain": "MMR",
+    "result": {
+      "title": "Результат",
+      "score": "Правильных",
+      "totalMmr": "Итого MMR",
+      "playAgain": "Ещё раз",
+      "backToLearn": "К разделам"
+    }
+  },
+  "flashcards": {
+    "title": "Карточки",
+    "flip": "Нажмите, чтобы перевернуть",
+    "front": "Формула",
+    "back": "Определение",
+    "rating": {
+      "again": "Снова",
+      "hard": "Сложно",
+      "good": "Хорошо",
+      "easy": "Легко"
+    },
+    "progress": "Прогресс",
+    "completed": "Готово!",
+    "studyAll": "Все карточки",
+    "dueToday": "На сегодня"
+  },
+  "profile": {
+    "title": "Профиль",
+    "mmr": "MMR",
+    "rank": "Ранг",
+    "streak": "Серия",
+    "maxStreak": "Лучшая серия",
+    "stats": "Статистика",
+    "recentActivity": "Недавняя активность",
+    "days": "дн.",
+    "editProfile": "Редактировать"
+  },
+  "leaderboard": {
+    "title": "Рейтинг",
+    "rank": "Место",
+    "player": "Игрок",
+    "mmr": "MMR",
+    "streak": "Серия",
+    "youLabel": "Вы"
+  },
+  "simulation": {
+    "play": "Старт",
+    "pause": "Пауза",
+    "reset": "Сброс",
+    "controls": "Управление",
+    "realtime": "Данные в реальном времени"
+  },
+  "auth": {
+    "signIn": "Войти",
+    "signUp": "Регистрация",
+    "signOut": "Выйти",
+    "email": "Email",
+    "password": "Пароль",
+    "username": "Имя пользователя",
+    "forgotPassword": "Забыли пароль?",
+    "noAccount": "Нет аккаунта?",
+    "haveAccount": "Уже есть аккаунт?"
+  },
+  "common": {
+    "loading": "Загрузка...",
+    "error": "Ошибка",
+    "retry": "Повторить",
+    "back": "Назад",
+    "save": "Сохранить",
+    "cancel": "Отмена",
+    "confirm": "Подтвердить"
+  }
+}
